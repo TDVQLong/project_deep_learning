@@ -679,15 +679,7 @@ with st.sidebar:
     enable_panzoom = st.toggle("Bật Kính lúp Pan & Zoom PACS", value=True,
                               help="Cho phép lăn chuột phóng to 1x-5x và kéo di chuyển ảnh X-quang trực tiếp.")
 
-    st.markdown("---")
-    st.markdown("### 🏷️ Lọc nhãn hiển thị")
-    all_class_keys = list(CLASS_MAP.keys())
-    selected_classes = st.multiselect(
-        "Hiển thị các loại tổn thương:",
-        options=all_class_keys,
-        default=["fracture", "metal", "periostealreaction", "pronatorsign", "softtissue", "text"],
-        format_func=lambda x: CLASS_MAP[x]["vi"]
-    )
+
 
     st.markdown("---")
     st.markdown("### 📥 Nguồn ảnh chụp")
@@ -809,14 +801,8 @@ with tab_main:
         result = results[0]
         boxes = result.boxes
         
-        # Lọc các hộp theo danh sách nhãn bác sĩ chọn ở sidebar
-        filtered_indices = []
-        if len(boxes) > 0:
-            for idx, box in enumerate(boxes):
-                cls_id = int(box.cls[0].item())
-                raw_name = result.names[cls_id]
-                if raw_name in selected_classes:
-                    filtered_indices.append(idx)
+        # Toàn bộ các hộp phát hiện thuộc 9 lớp tổn thương đều được hiển thị
+        filtered_indices = list(range(len(boxes))) if len(boxes) > 0 else []
 
         num_detections = len(filtered_indices)
 
