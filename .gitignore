@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches and environments
+.pytest_cache/
+.ipynb_checkpoints/
+.env
+.venv/
+env/
+venv/
+ENV/
+
+# Large datasets & zip files (Keep repo clean)
+*.zip
+*.tar.gz
+temp/
+dataset/
+/kaggle/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# VS Code & IDE files
+.vscode/
+.idea/

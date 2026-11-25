@@ -1,0 +1,18 @@
+# GRAZPEDWRI-DX Pediatric Wrist Trauma X-Ray Dataset (YOLO format)
+# Total: 20,327 images | Train: 15,327 (75.4%) | Val: 4,000 (19.7%) | Test: 1,000 (4.9%)
+path: /kaggle/temp/dataset
+train: images/train
+val: images/val
+test: images/test
+
+# 9 Diagnostic Classes
+names:
+  0: boneanomaly
+  1: bonelesion
+  2: foreignbody
+  3: fracture
+  4: metal
+  5: periostealreaction
+  6: pronatorsign
+  7: softtissue
+  8: text
