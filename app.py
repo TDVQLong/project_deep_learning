@@ -714,9 +714,8 @@ st.markdown("""
 # -----------------------------------------------------------------------------
 # 7. PHÂN CHIA HỆ THỐNG THÀNH 4 TABS CHUYÊN NGHIỆP
 # -----------------------------------------------------------------------------
-tab_main, tab_gt_compare, tab_analytics, tab_guide = st.tabs([
+tab_main, tab_analytics, tab_guide = st.tabs([
     "🩺 Phòng Chẩn đoán hình ảnh (Workspace)",
-    "🔍 Đối chiếu Nhãn Bác sĩ (Ground Truth vs AI)",
     "📊 Bảng phân tích & Hiệu năng mô hình",
     "📖 Cẩm nang 9 tổn thương & Thông tin Đề tài"
 ])
@@ -968,87 +967,7 @@ with tab_main:
             st.dataframe(df, use_container_width=True, hide_index=True)
 
         # =============================================================================
-# TAB 2: ĐỐI CHIẾU NHÃN BÁC SĨ (GROUND TRUTH VS PREDICTION)
-# =============================================================================
-with tab_gt_compare:
-    st.markdown("### 🔍 Đối chiếu Nhãn thật của Bác sĩ (Ground Truth) vs AI Dự đoán")
-    st.caption("Công cụ phục vụ đánh giá tính khách quan của mô hình trên các ca bệnh thuộc tập Test 1.000 ảnh:")
-
-    # Danh sách các ca mẫu có file nhãn Ground Truth
-    gt_sample_options = {
-        "Ca bệnh 1 (Test Set): Gãy xương quay đang bó bột nẹp (Cast Fracture)": {
-            "img": "sample_05_cast_fracture_test.png",
-            "lbl": "sample_05_cast_fracture_test.txt",
-            "info": "Bệnh nhi gãy xương quay 1/3 dưới đã nắn chỉnh và bó bột. Có nhãn chữ L và nhãn ổ gãy."
-        },
-        "Ca bệnh 2: Gãy xương kèm nẹp kim loại sau mổ (Fracture + Plate/Screws)": {
-            "img": "sample_01_fracture.png",
-            "lbl": None,
-            "info": "Ca bệnh có nẹp kim loại cố định và đường nứt tại đầu dưới xương quay."
-        }
-    }
-
-    selected_gt_key = st.selectbox("Chọn ca bệnh đối chiếu từ tập Test:", list(gt_sample_options.keys()))
-    gt_data = gt_sample_options[selected_gt_key]
-    gt_img_path = os.path.join(SAMPLES_DIR, gt_data["img"])
-
-    if os.path.exists(gt_img_path):
-        gt_raw_img = Image.open(gt_img_path).convert("RGB")
-        w_img, h_img = gt_raw_img.size
-
-        # 1. Vẽ ảnh Ground Truth nếu có file nhãn .txt
-        gt_vis_np = np.array(gt_raw_img.copy())
-        gt_boxes_count = 0
-
-        if gt_data["lbl"]:
-            lbl_file_path = os.path.join(SAMPLES_DIR, gt_data["lbl"])
-            if os.path.exists(lbl_file_path):
-                with open(lbl_file_path, "r") as f:
-                    lines = f.read().strip().split("\n")
-                for line in lines:
-                    parts = line.strip().split()
-                    if len(parts) >= 5:
-                        cls_id = int(parts[0])
-                        xc, yc, bw, bh = map(float, parts[1:5])
-                        gx1 = int(round((xc - bw / 2) * w_img))
-                        gy1 = int(round((yc - bh / 2) * h_img))
-                        gx2 = int(round((xc + bw / 2) * w_img))
-                        gy2 = int(round((yc + bh / 2) * h_img))
-
-                        raw_name = model.names.get(cls_id, f"Class_{cls_id}") if model else f"Class_{cls_id}"
-                        color_gt = (0, 230, 0) if cls_id == 8 else (0, 0, 235)
-
-                        cv2.rectangle(gt_vis_np, (gx1, gy1), (gx2, gy2), color_gt, 2)
-                        lbl_txt = f"GT: {raw_name}"
-                        cv2.putText(gt_vis_np, lbl_txt, (gx1, max(gy1 - 8, 15)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color_gt, 1, cv2.LINE_AA)
-                        gt_boxes_count += 1
-
-        gt_vis_img = Image.fromarray(gt_vis_np)
-
-        # 2. Chạy AI dự đoán trên cùng ảnh
-        pred_res = model.predict(gt_raw_img, conf=conf_thresh, iou=iou_thresh, verbose=False)[0]
-        pred_vis_img = Image.fromarray(pred_res.plot()[..., ::-1])
-
-        # Hiển thị song song 2 ảnh chuẩn PACS
-        c_gt, c_pred = st.columns(2)
-        with c_gt:
-            st.markdown("##### 🩺 Nhãn thật của Bác sĩ (Ground Truth)")
-            if enable_panzoom:
-                render_panzoom_viewer(gt_vis_img, caption=f"GROUND TRUTH ({gt_boxes_count} VÙNG)", viewer_id="viewer_gt", height=500)
-            else:
-                st.image(gt_vis_img, caption="Nhãn Ground Truth chuẩn hóa", use_container_width=True)
-
-        with c_pred:
-            st.markdown("##### 🤖 Nhãn do AI YOLOv8s tự động phát hiện")
-            if enable_panzoom:
-                render_panzoom_viewer(pred_vis_img, caption=f"YOLOv8s PREDICTION ({len(pred_res.boxes)} VÙNG)", viewer_id="viewer_pred_gt", height=500)
-            else:
-                st.image(pred_vis_img, caption="Dự đoán của mô hình YOLOv8s", use_container_width=True)
-
-        st.success(f"💡 **Đánh giá đối chiếu:** Mô hình AI đã khoanh vùng trùng khớp vào đúng vị trí tổn thương do bác sĩ gắn nhãn! (Thông tin ca bệnh: {gt_data['info']})")
-
-# =============================================================================
-# TAB 3: BẢNG PHÂN TÍCH & HIỆU NĂNG MÔ HÌNH (MODEL ANALYTICS)
+# TAB 2: BẢNG PHÂN TÍCH & HIỆU NĂNG MÔ HÌNH (MODEL ANALYTICS)
 # =============================================================================
 with tab_analytics:
     st.markdown("### 📊 Kết quả Thực nghiệm Huấn luyện & Đối sánh Khoa học")
@@ -1122,7 +1041,7 @@ with tab_analytics:
     st.dataframe(benchmark_df, use_container_width=True, hide_index=True)
 
 # =============================================================================
-# TAB 4: CẨM NANG 9 TỔN THƯƠNG & THÔNG TIN ĐỀ TÀI
+# TAB 3: CẨM NANG 9 TỔN THƯƠNG & THÔNG TIN ĐỀ TÀI
 # =============================================================================
 with tab_guide:
     st.markdown("### 📖 Cẩm nang Phân loại 9 Lớp Tổn thương (GRAZPEDWRI-DX)")
