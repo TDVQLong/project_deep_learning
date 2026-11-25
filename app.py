@@ -967,27 +967,7 @@ with tab_main:
             df = pd.DataFrame(det_list)
             st.dataframe(df, use_container_width=True, hide_index=True)
 
-        # PHIẾU TÓM TẮT KẾT QUẢ CHẨN ĐOÁN X-QUANG SƠ BỘ
-        with st.expander("📄 Xuất phiếu kết luận chẩn đoán X-quang sơ bộ (DICOM Report Summary)", expanded=False):
-            st.markdown(f"""
-            <div class="dicom-report-card">
-                <div class="dicom-report-head">
-                    <span>🏥 PHIẾU ĐÁNH GIÁ HÌNH ẢNH HỌC X-QUANG CỔ TAY (AI-ASSISTED DICOM REPORT)</span>
-                    <span style="font-size:0.8rem;color:#7d8590;">TIÊU CHUẨN DICOM / PACS</span>
-                </div>
-                <div class="dicom-report-row"><span class="dicom-key">Mã bệnh nhân:</span> <span class="dicom-val">{patient_id_label}</span></div>
-                <div class="dicom-report-row"><span class="dicom-key">Thời gian phân tích:</span> <span class="dicom-val">{time.strftime('%H:%M:%S - %d/%m/%Y')}</span></div>
-                <div class="dicom-report-row"><span class="dicom-key">Mô hình AI chẩn đoán:</span> <span class="dicom-val">YOLOv8s Anchor-Free (GrazPedWri-DX Trained)</span></div>
-                <div class="dicom-report-row"><span class="dicom-key">Thời gian phản hồi AI:</span> <span class="dicom-val">{t_infer:.1f} ms</span></div>
-                <div class="dicom-report-row"><span class="dicom-key">Kết luận hình ảnh học:</span> <span class="dicom-val" style="color:{'#ff2e4d' if fracture_detected else '#10b981'};">{'PHÁT HIỆN TỔN THƯƠNG GÃY XƯƠNG CỔ TAY' if fracture_detected else 'KHÔNG THẤY GÃY XƯƠNG CẤP TÍNH'}</span></div>
-                <div class="dicom-report-row"><span class="dicom-key">Số lượng vùng tổn thương:</span> <span class="dicom-val">{num_detections} vị trí (Độ tin cậy cao nhất: {top_conf*100:.1f}%)</span></div>
-                <div style="margin-top: 14px; font-size: 0.82rem; color: #7d8590; border-top: 1px dashed #1e2430; padding-top: 8px;">
-                    * Lưu ý: Kết quả trên là gợi ý hỗ trợ chẩn đoán từ hệ thống trí tuệ nhân tạo. Bác sĩ chuyên khoa Chẩn đoán hình ảnh chịu trách nhiệm ký duyệt kết luận cuối cùng.
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-
-# =============================================================================
+        # =============================================================================
 # TAB 2: ĐỐI CHIẾU NHÃN BÁC SĨ (GROUND TRUTH VS PREDICTION)
 # =============================================================================
 with tab_gt_compare:
