@@ -31,66 +31,110 @@ st.set_page_config(
 # Custom CSS phong cách Dark Mode chuyên sâu phòng đọc phim PACS / DICOM
 st.markdown("""
 <style>
-    /* BẢNG MÀU CHUẨN PHÒNG ĐỌC PHIM PACS / DICOM */
+    /* BẢNG MÀU CHUẨN CLINICAL PACS WORKSTATION (LIGHT MODE) */
     :root {
-        --bg-main: #08090b;
-        --bg-surface: #111317;
-        --bg-card: #15181e;
-        --border-color: #22262e;
-        --border-focus: #00e5ff;
-        --accent-cyan: #00e5ff;
-        --accent-teal: #00adb5;
-        --text-white: #ffffff;
-        --text-silver: #e2e8f0;
-        --text-muted: #8b949e;
-        --red-fracture: #ff2e4d;
-        --blue-metal: #3b82f6;
-        --amber-can: #f59e0b;
-        --green-safe: #10b981;
+        --bg-main: #F8FAFC;
+        --bg-surface: #F1F5F9;
+        --bg-card: #FFFFFF;
+        --border-color: #E2E8F0;
+        --border-focus: #0284C7;
+        --accent-blue: #0284C7;
+        --accent-sky: #0EA5E9;
+        --text-primary: #0F172A;
+        --text-secondary: #475569;
+        --text-muted: #64748B;
+        --red-fracture: #DC2626;
+        --blue-metal: #2563EB;
+        --amber-can: #D97706;
+        --green-safe: #16A34A;
     }
 
-    /* Nền tổng thể Deep Obsidian Black */
+    /* Nền tổng thể Clinical Light Mode */
     .stApp {
         background-color: var(--bg-main) !important;
-        color: var(--text-silver);
+        color: var(--text-primary);
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
     }
 
-    /* Ẩn viền thừa của Streamlit */
+    /* Thanh Header mặc định của Streamlit */
     header[data-testid="stHeader"] {
-        background-color: rgba(8, 9, 11, 0.85) !important;
+        background-color: rgba(248, 250, 252, 0.85) !important;
         backdrop-filter: blur(8px);
     }
 
     /* Thanh bên Sidebar PACS */
     [data-testid="stSidebar"] {
-        background-color: #0c0e12 !important;
-        border-right: 1px solid var(--border-color) !important;
+        background-color: #F1F5F9 !important;
+        border-right: 1px solid #E2E8F0 !important;
+    }
+    [data-testid="stSidebar"] h3 {
+        color: #0F172A !important;
+        font-size: 1.05rem !important;
+        font-weight: 700 !important;
+        margin-top: 14px !important;
+        margin-bottom: 8px !important;
+    }
+    [data-testid="stSidebar"] hr {
+        border: none !important;
+        border-top: 1px solid #E2E8F0 !important;
+        margin: 18px 0 !important;
+    }
+
+    /* Khung File Uploader nổi bật phong cách lâm sàng */
+    [data-testid="stFileUploader"] {
+        padding: 4px 0;
+    }
+    [data-testid="stFileUploader"] section {
+        background-color: #FFFFFF !important;
+        border: 2px dashed #93C5FD !important;
+        border-radius: 10px !important;
+        padding: 18px 12px !important;
+        transition: all 0.2s ease !important;
+    }
+    [data-testid="stFileUploader"] section:hover {
+        border-color: #0284C7 !important;
+        background-color: #F8FAFC !important;
+    }
+    [data-testid="stFileUploader"] section button {
+        background-color: #F1F5F9 !important;
+        color: #0F172A !important;
+        border: 1px solid #CBD5E1 !important;
+        border-radius: 6px !important;
+        font-weight: 600 !important;
+    }
+    [data-testid="stFileUploader"] section button:hover {
+        background-color: #E0F2FE !important;
+        color: #0284C7 !important;
+        border-color: #0284C7 !important;
+    }
+    [data-testid="stFileUploader"] small {
+        color: #64748B !important;
     }
 
     /* Header hệ thống PACS Workstation */
     .pacs-header-card {
-        background: linear-gradient(135deg, #0d0f14 0%, #141820 60%, #06283d 100%);
-        border: 1px solid #1f2530;
-        border-radius: 10px;
-        padding: 18px 22px;
-        margin-bottom: 18px;
-        box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.6);
+        background: linear-gradient(90deg, #E0F2FE 0%, #F0F9FF 100%);
+        border: 1px solid #BAE6FD;
+        border-radius: 12px;
+        padding: 20px 24px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 12px -2px rgba(2, 132, 199, 0.08);
     }
     .pacs-main-title {
-        font-size: 1.95rem;
+        font-size: 1.85rem;
         font-weight: 800;
         letter-spacing: -0.3px;
-        color: #ffffff;
-        margin-bottom: 4px;
+        color: #0369A1;
+        margin-bottom: 6px;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
     }
     .pacs-subtitle {
         font-size: 0.95rem;
-        color: var(--text-muted);
-        margin-bottom: 12px;
+        color: #475569;
+        margin-bottom: 14px;
+        line-height: 1.5;
     }
     .pacs-badge-row {
         display: flex;
@@ -98,154 +142,142 @@ st.markdown("""
         gap: 8px;
     }
     .pacs-tag {
-        font-size: 0.78rem;
+        font-size: 0.80rem;
         font-weight: 700;
-        padding: 3px 10px;
-        border-radius: 4px;
-        letter-spacing: 0.3px;
+        padding: 4px 12px;
+        border-radius: 6px;
+        letter-spacing: 0.2px;
         display: inline-flex;
         align-items: center;
-        gap: 5px;
+        gap: 6px;
     }
-    .tag-cyan { background: rgba(0, 229, 255, 0.12); color: #00e5ff; border: 1px solid rgba(0, 229, 255, 0.3); }
-    .tag-green { background: rgba(16, 185, 129, 0.12); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
-    .tag-amber { background: rgba(245, 158, 11, 0.12); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
-    .tag-purple { background: rgba(168, 85, 247, 0.12); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+    .tag-cyan { background: #FFFFFF; color: #0284C7; border: 1px solid #BAE6FD; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+    .tag-green { background: #DCFCE7; color: #15803D; border: 1px solid #BBF7D0; }
+    .tag-amber { background: #FEF3C7; color: #B45309; border: 1px solid #FDE68A; }
+    .tag-purple { background: #F3E8FF; color: #7E22CE; border: 1px solid #E9D5FF; }
 
     /* Thẻ chỉ số KPI (PACS Metric HUD) */
     .pacs-kpi-card {
-        background: #111317;
-        border: 1px solid #1f232b;
-        border-radius: 8px;
-        padding: 14px 16px;
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 12px;
+        padding: 16px 18px;
         text-align: center;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         transition: all 0.2s ease;
     }
     .pacs-kpi-card:hover {
-        border-color: var(--accent-cyan);
+        border-color: #0284C7;
         transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(0, 229, 255, 0.15);
+        box-shadow: 0 6px 16px rgba(2, 132, 199, 0.12);
     }
     .pacs-kpi-label {
         font-size: 0.78rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.6px;
-        color: #7d8590;
+        color: #64748B;
         margin-bottom: 4px;
     }
     .pacs-kpi-val {
         font-size: 1.65rem;
         font-weight: 800;
-        color: #00e5ff;
-        text-shadow: 0 0 12px rgba(0, 229, 255, 0.25);
+        color: #0284C7;
     }
     .pacs-kpi-sub {
         font-size: 0.74rem;
-        color: #606770;
+        color: #64748B;
         margin-top: 2px;
     }
 
     /* Bảng thông báo lâm sàng PACS HUD Alert */
     .pacs-alert-danger {
-        background: linear-gradient(135deg, rgba(255, 46, 77, 0.12), rgba(153, 16, 36, 0.20));
-        border: 1px solid rgba(255, 46, 77, 0.4);
-        border-left: 5px solid #ff2e4d;
-        border-radius: 8px;
+        background: linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%);
+        border: 1px solid #FECACA;
+        border-left: 5px solid #EF4444;
+        border-radius: 10px;
         padding: 14px 18px;
-        color: #ffe4e6;
+        color: #991B1B;
         margin: 14px 0;
+        box-shadow: 0 2px 4px rgba(239, 68, 68, 0.06);
     }
     .pacs-alert-warning {
-        background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(180, 83, 9, 0.20));
-        border: 1px solid rgba(245, 158, 11, 0.4);
-        border-left: 5px solid #f59e0b;
-        border-radius: 8px;
+        background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+        border: 1px solid #FDE68A;
+        border-left: 5px solid #F59E0B;
+        border-radius: 10px;
         padding: 14px 18px;
-        color: #fef3c7;
+        color: #92400E;
         margin: 14px 0;
+        box-shadow: 0 2px 4px rgba(245, 158, 11, 0.06);
     }
     .pacs-alert-success {
-        background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(4, 120, 87, 0.20));
-        border: 1px solid rgba(16, 185, 129, 0.4);
-        border-left: 5px solid #10b981;
-        border-radius: 8px;
+        background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+        border: 1px solid #BBF7D0;
+        border-left: 5px solid #10B981;
+        border-radius: 10px;
         padding: 14px 18px;
-        color: #d1fae5;
+        color: #166534;
         margin: 14px 0;
+        box-shadow: 0 2px 4px rgba(16, 185, 129, 0.06);
     }
 
-    /* Tabs phong cách thanh điều khiển DICOM */
+    /* Tabs phong cách thanh điều khiển DICOM PACS */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 6px;
-        border-bottom: 1px solid #1f232b;
-        padding-bottom: 4px;
+        gap: 8px;
+        border-bottom: 2px solid #E2E8F0;
+        padding-bottom: 6px;
     }
     .stTabs [data-baseweb="tab"] {
-        height: 42px;
-        background-color: #111317;
-        border: 1px solid #1f242d;
-        border-radius: 6px 6px 0 0;
-        color: #8b949e;
+        height: 44px;
+        background-color: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 8px 8px 0 0;
+        color: #64748B;
         font-weight: 600;
-        font-size: 0.90rem;
-        padding: 0 16px;
+        font-size: 0.92rem;
+        padding: 0 18px;
         transition: all 0.15s ease;
     }
     .stTabs [data-baseweb="tab"]:hover {
-        color: #ffffff;
-        background-color: #161920;
+        color: #0F172A;
+        background-color: #F8FAFC;
+        border-color: #CBD5E1;
     }
     .stTabs [aria-selected="true"] {
-        background-color: #171b22 !important;
-        border-color: #00e5ff !important;
-        border-bottom-color: #171b22 !important;
-        color: #00e5ff !important;
-        box-shadow: inset 0 2px 0 #00e5ff;
+        background-color: #E0F2FE !important;
+        border-color: #0284C7 !important;
+        border-bottom-color: #E0F2FE !important;
+        color: #0369A1 !important;
+        box-shadow: inset 0 3px 0 #0284C7;
+        font-weight: 700;
     }
 
-    /* Tùy chỉnh màu sắc Sliders và Toggles sang Medical Cyan */
+    /* Tùy chỉnh màu sắc Sliders và Toggles sang Medical Blue */
     .stSlider [data-baseweb="slider"] div[role="slider"] {
-        background-color: #00e5ff !important;
-        border-color: #00e5ff !important;
-        box-shadow: 0 0 10px rgba(0, 229, 255, 0.6) !important;
+        background-color: #0284C7 !important;
+        border-color: #0284C7 !important;
+        box-shadow: 0 0 8px rgba(2, 132, 199, 0.4) !important;
     }
     .stSlider [data-baseweb="slider"] div[data-testid="stSliderTrack"] > div:first-child {
-        background-color: #00e5ff !important;
+        background-color: #0284C7 !important;
     }
     [data-testid="stToggle"] button[aria-checked="true"] {
-        background-color: #00e5ff !important;
+        background-color: #0284C7 !important;
     }
 
-    /* Phiếu kết luận lâm sàng DICOM Report */
-    .dicom-report-card {
-        background: #0f1115;
-        border: 1px solid #1e222a;
-        border-radius: 8px;
-        padding: 16px 20px;
-        margin-top: 14px;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+    /* Hộp Expander và Dataframe */
+    [data-testid="stExpander"] {
+        background-color: #FFFFFF !important;
+        border: 1px solid #E2E8F0 !important;
+        border-radius: 12px !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04) !important;
     }
-    .dicom-report-head {
-        font-size: 1.05rem;
-        font-weight: 700;
-        color: #00e5ff;
-        border-bottom: 1px solid #1e222a;
-        padding-bottom: 8px;
-        margin-bottom: 10px;
-        display: flex;
-        justify-content: space-between;
+    [data-testid="stDataFrame"] {
+        border: 1px solid #E2E8F0 !important;
+        border-radius: 10px !important;
+        background-color: #FFFFFF !important;
     }
-    .dicom-report-row {
-        display: flex;
-        justify-content: space-between;
-        padding: 5px 0;
-        font-size: 0.88rem;
-        border-bottom: 1px dashed #1a1e26;
-    }
-    .dicom-key { color: #7d8590; }
-    .dicom-val { color: #f0f6fc; font-weight: 600; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -379,8 +411,8 @@ def render_panzoom_viewer(pil_image, caption="ẢNH X-QUANG", viewer_id="viewer_
     <style>
       * {{ box-sizing: border-box; margin: 0; padding: 0; }}
       body {{
-        background: #08090b;
-        color: #e2e8f0;
+        background: #F8FAFC;
+        color: #0F172A;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         overflow: hidden;
         user-select: none;
@@ -389,22 +421,22 @@ def render_panzoom_viewer(pil_image, caption="ẢNH X-QUANG", viewer_id="viewer_
         position: relative;
         width: 100%;
         height: {height}px;
-        background: #040507;
-        border: 1px solid #1e2430;
-        border-radius: 8px;
+        background: #0B0F17;
+        border: 1px solid #CBD5E1;
+        border-radius: 10px;
         overflow: hidden;
         display: flex;
         flex-direction: column;
-        box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 0 4px 15px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       }}
       /* Thanh tiêu đề PACS trên cùng - Tách biệt hoàn toàn */
       .pacs-topbar {{
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 8px 12px;
-        background: #0e1117;
-        border-bottom: 1px solid #1a202c;
+        padding: 8px 14px;
+        background: #F1F5F9;
+        border-bottom: 1px solid #E2E8F0;
         height: 44px;
         flex-shrink: 0;
       }}
@@ -417,16 +449,16 @@ def render_panzoom_viewer(pil_image, caption="ẢNH X-QUANG", viewer_id="viewer_
       .pacs-dot {{
         width: 7px;
         height: 7px;
-        background: #00e5ff;
+        background: #0284C7;
         border-radius: 50%;
-        box-shadow: 0 0 8px #00e5ff;
+        box-shadow: 0 0 6px rgba(2, 132, 199, 0.5);
         flex-shrink: 0;
       }}
       .caption-text {{
         font-size: 12px;
         font-weight: 700;
-        color: #00e5ff;
-        letter-spacing: 0.4px;
+        color: #0369A1;
+        letter-spacing: 0.3px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -439,21 +471,20 @@ def render_panzoom_viewer(pil_image, caption="ẢNH X-QUANG", viewer_id="viewer_
         flex-shrink: 0;
       }}
       .pacs-btn {{
-        background: #171c26;
-        color: #e2e8f0;
-        border: 1px solid #283142;
-        border-radius: 5px;
-        padding: 5px 9px;
+        background: #FFFFFF;
+        color: #334155;
+        border: 1px solid #CBD5E1;
+        border-radius: 6px;
+        padding: 5px 10px;
         font-size: 12px;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.15s ease;
       }}
       .pacs-btn:hover {{
-        background: #00e5ff;
-        border-color: #00e5ff;
-        color: #000000;
-        box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+        background: #E0F2FE;
+        border-color: #0284C7;
+        color: #0284C7;
       }}
       .pacs-btn:active {{
         transform: scale(0.96);
@@ -461,10 +492,10 @@ def render_panzoom_viewer(pil_image, caption="ẢNH X-QUANG", viewer_id="viewer_
       .zoom-level {{
         font-size: 11px;
         font-weight: 800;
-        color: #00e5ff;
+        color: #0284C7;
         padding: 4px 8px;
-        background: rgba(0, 229, 255, 0.10);
-        border: 1px solid rgba(0, 229, 255, 0.25);
+        background: #E0F2FE;
+        border: 1px solid #BAE6FD;
         border-radius: 4px;
         min-width: 48px;
         text-align: center;
@@ -479,7 +510,7 @@ def render_panzoom_viewer(pil_image, caption="ẢNH X-QUANG", viewer_id="viewer_
         align-items: center;
         justify-content: center;
         position: relative;
-        background-color: #030406;
+        background-color: #090D14;
       }}
       .pacs-viewport.grabbing {{
         cursor: grabbing;
@@ -507,13 +538,13 @@ def render_panzoom_viewer(pil_image, caption="ẢNH X-QUANG", viewer_id="viewer_
         left: 50%;
         transform: translateX(-50%);
         z-index: 30;
-        background: rgba(14, 17, 23, 0.85);
+        background: rgba(15, 23, 42, 0.80);
         backdrop-filter: blur(4px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
         border-radius: 14px;
         padding: 3px 12px;
         font-size: 10px;
-        color: #8b949e;
+        color: #E2E8F0;
         pointer-events: none;
         white-space: nowrap;
       }}
@@ -697,7 +728,7 @@ with st.sidebar:
 st.markdown("""
 <div class="pacs-header-card">
     <div class="pacs-main-title">
-        <span style="color:#00e5ff;">🩻</span> PACS AI WORKSTATION - CHẨN ĐOÁN GÃY XƯƠNG CỔ TAY NHI
+        <span style="color:#0284C7;">🩻</span> PACS AI WORKSTATION - CHẨN ĐOÁN GÃY XƯƠNG CỔ TAY NHI
     </div>
     <div class="pacs-subtitle">
         Hệ thống hỗ trợ ra quyết định lâm sàng (CDSS) trên ảnh X-quang chấn thương cổ tay trẻ em | Nhóm 11 - Deep Learning (ICTU)
@@ -725,29 +756,29 @@ tab_main, tab_analytics, tab_guide = st.tabs([
 # =============================================================================
 with tab_main:
     if image_to_process is None:
-        # MÀN HÌNH CHÀO ĐÓN KHI CHƯA NẠP ẢNH (EMPTY STATE CHUYÊN NGHIỆP)
+        # MÀN HÌNH CHÀO ĐÓN KHI CHƯA NẠP ẢNH (EMPTY STATE CHUYÊN NGHIỆP - CLINICAL LIGHT)
         st.markdown("""
-        <div style="background: #0d0f14; border: 1px dashed #22262e; border-radius: 10px; padding: 45px 30px; text-align: center; margin: 20px 0;">
-            <div style="font-size: 3.8rem; margin-bottom: 12px; filter: drop-shadow(0 0 15px rgba(0,229,255,0.3));">🩻</div>
-            <h3 style="color: #ffffff; margin-bottom: 8px; font-weight: 700;">Trạm Chẩn đoán Hình ảnh X-quang Kỹ thuật số</h3>
-            <p style="color: #8b949e; max-width: 680px; margin: 0 auto 24px auto; font-size: 0.95rem; line-height: 1.6;">
+        <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 45px 30px; text-align: center; margin: 20px 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);">
+            <div style="font-size: 3.8rem; margin-bottom: 12px; filter: drop-shadow(0 2px 8px rgba(2, 132, 199, 0.25));">🩻</div>
+            <h3 style="color: #0F172A; margin-bottom: 8px; font-weight: 700;">Trạm Chẩn đoán Hình ảnh X-quang Kỹ thuật số</h3>
+            <p style="color: #475569; max-width: 680px; margin: 0 auto 24px auto; font-size: 0.95rem; line-height: 1.6;">
                 Hệ thống tích hợp mô hình học sâu <b>YOLOv8s Anchor-Free</b> được huấn luyện trên <b>20.327 ảnh X-quang</b> của bộ dữ liệu quốc tế GRAZPEDWRI-DX, hỗ trợ bác sĩ sàng lọc khẩn cấp các tổn thương gãy xương cành tươi, nẹp kim loại và sưng nề mô mềm với độ nhạy 98.1%.
             </p>
-            <div style="display: flex; justify-content: center; gap: 15px; margin-top: 20px; flex-wrap: wrap;">
-                <div style="background: #111317; padding: 14px 22px; border-radius: 6px; border: 1px solid #1f232b; min-width: 140px;">
-                    <div style="font-weight: 800; color: #00e5ff; font-size: 1.3rem;">20.327</div>
-                    <div style="font-size: 0.78rem; color: #7d8590;">Ảnh X-quang Train/Val/Test</div>
+            <div style="display: flex; justify-content: center; gap: 16px; margin-top: 20px; flex-wrap: wrap;">
+                <div style="background: #F0F9FF; padding: 14px 24px; border-radius: 8px; border: 1px solid #BAE6FD; min-width: 170px;">
+                    <div style="font-weight: 800; color: #0284C7; font-size: 1.35rem;">20.327</div>
+                    <div style="font-size: 0.78rem; color: #64748B; font-weight: 600;">Ảnh X-quang Train/Val/Test</div>
                 </div>
-                <div style="background: #111317; padding: 14px 22px; border-radius: 6px; border: 1px solid #1f232b; min-width: 140px;">
-                    <div style="font-weight: 800; color: #10b981; font-size: 1.3rem;">94.0%</div>
-                    <div style="font-size: 0.78rem; color: #7d8590;">mAP@0.5 Lớp Gãy xương</div>
+                <div style="background: #F0FDF4; padding: 14px 24px; border-radius: 8px; border: 1px solid #BBF7D0; min-width: 170px;">
+                    <div style="font-weight: 800; color: #16A34A; font-size: 1.35rem;">94.0%</div>
+                    <div style="font-size: 0.78rem; color: #64748B; font-weight: 600;">mAP@0.5 Lớp Gãy xương</div>
                 </div>
-                <div style="background: #111317; padding: 14px 22px; border-radius: 6px; border: 1px solid #1f232b; min-width: 140px;">
-                    <div style="font-weight: 800; color: #f59e0b; font-size: 1.3rem;">&lt; 200 ms</div>
-                    <div style="font-size: 0.78rem; color: #7d8590;">Tốc độ suy luận CPU</div>
+                <div style="background: #FFFBEB; padding: 14px 24px; border-radius: 8px; border: 1px solid #FDE68A; min-width: 170px;">
+                    <div style="font-weight: 800; color: #D97706; font-size: 1.35rem;">&lt; 200 ms</div>
+                    <div style="font-size: 0.78rem; color: #64748B; font-weight: 600;">Tốc độ suy luận CPU</div>
                 </div>
             </div>
-            <div style="margin-top: 30px; font-size: 0.9rem; color: #00e5ff;">
+            <div style="margin-top: 30px; font-size: 0.92rem; color: #0284C7; font-weight: 600;">
                 👈 <b>Thao tác:</b> Hãy chọn <b>Ảnh mẫu lâm sàng</b> hoặc <b>Tải ảnh lên</b> ở thanh điều khiển bên trái để bắt đầu soi phim.
             </div>
         </div>
@@ -755,9 +786,9 @@ with tab_main:
     else:
         # THANH THÔNG TIN CA CHỤP PACS METADATA BAR
         st.markdown(f"""
-        <div style="background: #111317; border-left: 4px solid #00e5ff; padding: 10px 16px; border-radius: 6px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border: 1px solid #1f242d; border-left: 4px solid #00e5ff;">
-            <div><b>Mã ca chụp:</b> <span style="color:#00e5ff; font-family: monospace;">{patient_id_label}</span> &nbsp;|&nbsp; <b>Tập tin:</b> <span style="color:#e2e8f0;">{image_name}</span></div>
-            <div style="color: #7d8590; font-size: 0.84rem;">Thời gian phân tích: <b style="color:#c9d1d9;">{time.strftime('%H:%M:%S - %d/%m/%Y')}</b></div>
+        <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-left: 4px solid #0284C7; padding: 12px 18px; border-radius: 10px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; box-shadow: 0 2px 4px rgba(0,0,0,0.03);">
+            <div style="color: #0F172A;"><b>Mã ca chụp:</b> <span style="color:#0284C7; font-family: monospace; font-weight: 700;">{patient_id_label}</span> &nbsp;|&nbsp; <b>Tập tin:</b> <span style="color:#334155;">{image_name}</span></div>
+            <div style="color: #64748B; font-size: 0.84rem;">Thời gian phân tích: <b style="color:#0F172A;">{time.strftime('%H:%M:%S - %d/%m/%Y')}</b></div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -910,7 +941,7 @@ with tab_main:
         if fracture_detected:
             st.markdown("""
             <div class="pacs-alert-danger">
-                <h4 style="margin: 0 0 6px 0; color: #ff2e4d; font-weight: 800;">🚨 CẢNH BÁO CẤP CỨU: PHÁT HIỆN TỔN THƯƠNG GÃY XƯƠNG CỔ TAY (FRACTURE)</h4>
+                <h4 style="margin: 0 0 6px 0; color: #B91C1C; font-weight: 800;">🚨 CẢNH BÁO CẤP CỨU: PHÁT HIỆN TỔN THƯƠNG GÃY XƯƠNG CỔ TAY (FRACTURE)</h4>
                 <p style="margin: 0; font-size: 0.94rem; line-height: 1.5;">
                     Hệ thống nhận diện thấy gián đoạn liên tục của bờ vỏ xương (đường nứt hoặc gãy cành tươi). 
                     <b>Khuyến nghị lâm sàng:</b> Cố định ngay cổ tay bằng nẹp máng cẳng bàn tay; chỉ định chụp thêm tư thế Chếch hoặc hội chẩn chuyên khoa Chấn thương Chỉnh hình Nhi.
@@ -920,7 +951,7 @@ with tab_main:
         elif metal_detected or periosteal_detected:
             st.markdown("""
             <div class="pacs-alert-warning">
-                <h4 style="margin: 0 0 6px 0; color: #f59e0b; font-weight: 800;">⚠️ LƯU Ý LÂM SÀNG: PHÁT HIỆN DI CHỨNG CAN THIỆP / PHẢN ỨNG MÀNG XƯƠNG</h4>
+                <h4 style="margin: 0 0 6px 0; color: #B45309; font-weight: 800;">⚠️ LƯU Ý LÂM SÀNG: PHÁT HIỆN DI CHỨNG CAN THIỆP / PHẢN ỨNG MÀNG XƯƠNG</h4>
                 <p style="margin: 0; font-size: 0.94rem; line-height: 1.5;">
                     Ghi nhận có vật liệu kim loại (đinh/nẹp) hoặc dày màng xương tạo can. Không thấy đường gãy cấp tính di lệch mới rõ rệt. Cần theo dõi tiến trình liền xương.
                 </p>
@@ -929,7 +960,7 @@ with tab_main:
         elif num_detections > 0:
             st.markdown("""
             <div class="pacs-alert-success">
-                <h4 style="margin: 0 0 6px 0; color: #10b981; font-weight: 800;">ℹ️ KHÔNG PHÁT HIỆN ĐƯỜNG GÃY CẤP TÍNH</h4>
+                <h4 style="margin: 0 0 6px 0; color: #15803D; font-weight: 800;">ℹ️ KHÔNG PHÁT HIỆN ĐƯỜNG GÃY CẤP TÍNH</h4>
                 <p style="margin: 0; font-size: 0.94rem; line-height: 1.5;">
                     Chỉ phát hiện các ký hiệu đánh dấu giải phẫu (Text L/R) hoặc bóng sưng mô mềm nhẹ. Toàn vẹn vỏ xương quay và xương trụ được bảo tồn.
                 </p>
@@ -938,7 +969,7 @@ with tab_main:
         else:
             st.markdown("""
             <div class="pacs-alert-success">
-                <h4 style="margin: 0 0 6px 0; color: #10b981; font-weight: 800;">✅ BÌNH THƯỜNG: KHÔNG PHÁT HIỆN BẤT THƯỜNG</h4>
+                <h4 style="margin: 0 0 6px 0; color: #15803D; font-weight: 800;">✅ BÌNH THƯỜNG: KHÔNG PHÁT HIỆN BẤT THƯỜNG</h4>
                 <p style="margin: 0; font-size: 0.94rem; line-height: 1.5;">
                     Không phát hiện bất kỳ dấu hiệu tổn thương gãy xương hoặc dị vật nào vượt qua ngưỡng tin cậy đã chọn.
                 </p>
@@ -954,9 +985,9 @@ with tab_main:
                     with roi_cols[idx_p]:
                         st.image(roi_img, caption=f"Vùng #{roi_num}: {roi_name.split('(')[0]} ({roi_conf * 100:.1f}%)", use_container_width=True)
                         st.markdown(f"""
-                        <div style="font-size: 0.78rem; background: #0c0e12; padding: 8px 10px; border-radius: 6px; border: 1px solid #1e2430;">
-                            <b style="color:#00e5ff;">Mức độ:</b> {roi_info['severity']}<br>
-                            <b style="color:#f59e0b;">Xử trí:</b> {roi_info['action']}
+                        <div style="font-size: 0.78rem; background: #F8FAFC; padding: 10px 12px; border-radius: 8px; border: 1px solid #E2E8F0; color: #334155; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
+                            <b style="color:#0284C7;">Mức độ:</b> {roi_info['severity']}<br>
+                            <b style="color:#D97706;">Xử trí:</b> {roi_info['action']}
                         </div>
                         """, unsafe_allow_html=True)
 
@@ -1054,11 +1085,11 @@ with tab_guide:
         col_target = [c_g1, c_g2, c_g3][idx % 3]
         with col_target:
             st.markdown(f"""
-            <div style="background: #111317; border: 1px solid #1f242d; border-top: 3px solid {cls_info['hex']}; border-radius: 6px; padding: 14px; margin-bottom: 14px;">
-                <h5 style="color: {cls_info['hex']}; margin: 0 0 6px 0; font-weight: 700;">{cls_info['vi']}</h5>
-                <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 8px;"><b>Mô tả:</b> {cls_info['desc']}</p>
-                <div style="font-size: 0.78rem; background: #08090b; padding: 6px 8px; border-radius: 4px; color: #8b949e; border: 1px solid #1a1e26;">
-                    <b style="color:#00e5ff;">Xử trí:</b> {cls_info['action']}
+            <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-top: 3px solid {cls_info['hex']}; border-radius: 10px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.04);">
+                <h5 style="color: {cls_info['hex']}; margin: 0 0 8px 0; font-weight: 700;">{cls_info['vi']}</h5>
+                <p style="font-size: 0.85rem; color: #475569; margin-bottom: 10px; line-height: 1.5;"><b>Mô tả:</b> {cls_info['desc']}</p>
+                <div style="font-size: 0.78rem; background: #F8FAFC; padding: 8px 10px; border-radius: 6px; color: #334155; border: 1px solid #E2E8F0;">
+                    <b style="color:#0284C7;">Xử trí:</b> {cls_info['action']}
                 </div>
             </div>
             """, unsafe_allow_html=True)
