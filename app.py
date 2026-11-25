@@ -717,7 +717,7 @@ st.markdown("""
 tab_main, tab_analytics, tab_guide = st.tabs([
     "🩺 Phòng Chẩn đoán hình ảnh (Workspace)",
     "📊 Bảng phân tích & Hiệu năng mô hình",
-    "📖 Cẩm nang 9 tổn thương & Thông tin Đề tài"
+    "📖 Cẩm nang 9 tổn thương"
 ])
 
 # =============================================================================
@@ -1063,14 +1063,4 @@ with tab_guide:
             </div>
             """, unsafe_allow_html=True)
 
-    st.markdown("---")
-    st.markdown("### 👥 Thông tin Dự án Học phần")
-    st.markdown("""
-    - **Đề tài:** Phát hiện gãy xương cổ tay trẻ em trên ảnh X-quang sử dụng mô hình học sâu YOLOv8s.
-    - **Học phần:** Học sâu (Deep Learning) - Trường Đại học Công nghệ Thông tin & Truyền thông (ICTU).
-    - **Giảng viên hướng dẫn:** TS. Ngô Hữu Huy.
-    - **Nhóm thực hiện (Nhóm 11):**
-      - **Trần Đặng Vương Quốc Long** (Trưởng nhóm) - Điều phối, chia dữ liệu chống rò rỉ, phân tích thực nghiệm.
-      - **Nguyễn Văn Minh** - Khảo sát tập dữ liệu GRAZPEDWRI-DX, đối sánh Faster R-CNN, biên soạn Chương 1-2.
-      - **Nguyễn Văn Chỉnh** - Huấn luyện YOLOv8s, tiền xử lý CLAHE, xây dựng Web Demo Streamlit, biên soạn Chương 3.
-    """)
+
